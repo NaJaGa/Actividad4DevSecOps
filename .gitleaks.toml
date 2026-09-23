@@ -1,0 +1,36 @@
+# .gitleaks.toml - base configuration for RetailCommerce
+title = "RetailCommerce - Gitleaks Configuration"
+
+# Regla 1: Detecta contraseñas de base de datos ficticias usadas en el caso retail.
+[[rules]]
+id = "retail-db-password"
+description = "Detects hardcoded passwords with the fictional Retail pattern"
+regex = '''Retail\$[A-Za-z0-9]{2}[0-9]{4}[A-Za-z]{4}!'''
+tags = ["database", "retail", "password"]
+
+# Regla 2: Detecta tokens de pasarela de pago ficticios del caso retail.
+[[rules]]
+id = "retail-payment-api-key"
+description = "Detects fictional payment gateway tokens using the RetailPay format"
+regex = '''sk_test_RetailPay[A-Za-z0-9]{12}'''
+tags = ["payment", "api-key", "retail"]
+
+# Regla 3: Detecta claves de acceso usando un formato de ID de Clave de Acceso similar a AWS.
+[[rules]]
+id = "retail-cloud-access-key"
+description = "Detects cloud access keys using the AKIA format"
+regex = '''AKIA[A-Z0-9]{16}'''
+tags = ["cloud", "access-key", "retail"]
+
+[allowlist]
+description = "Exclusions for test files, documentation, and academic examples"
+paths = [
+  '''docs/.*''',
+  '''tests/fixtures/.*''',
+  '''examples/.*'''
+]
+regexes = [
+  '''AKIAIOSFODNN7EXAMPLE''',
+  '''sk_test_example_[A-Za-z0-9]+''',
+  '''Fake[A-Za-z0-9!$]+'''
+]

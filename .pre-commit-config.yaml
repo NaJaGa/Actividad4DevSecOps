@@ -1,0 +1,18 @@
+# .pre-commit-config.yaml - base configuration for RetailCommerce
+repos:
+  # Escaneo de secretos con Gitleaks usando el archivo de configuración personalizado.
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks
+        args: ["--config=.gitleaks.toml", "--verbose"]
+
+  # Controles generales de seguridad y calidad.
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+      - id: check-yaml
+      - id: end-of-file-fixer
